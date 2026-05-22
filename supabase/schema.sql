@@ -79,7 +79,7 @@ create policy "public read active products"
 drop policy if exists "admin write products" on products;
 create policy "admin write products"
   on products for all
-  using (auth.jwt() ->> 'role' = 'admin');
+  using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- Testimonials: público lê ativos, admin escreve tudo
 drop policy if exists "public read testimonials" on testimonials;
@@ -90,7 +90,7 @@ create policy "public read testimonials"
 drop policy if exists "admin write testimonials" on testimonials;
 create policy "admin write testimonials"
   on testimonials for all
-  using (auth.jwt() ->> 'role' = 'admin');
+  using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- Newsletter: público insere, admin lê
 drop policy if exists "public insert newsletter" on newsletter;
@@ -101,7 +101,7 @@ create policy "public insert newsletter"
 drop policy if exists "admin read newsletter" on newsletter;
 create policy "admin read newsletter"
   on newsletter for select
-  using (auth.jwt() ->> 'role' = 'admin');
+  using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- Site settings: público lê, admin edita
 drop policy if exists "public read settings" on site_settings;
@@ -112,7 +112,7 @@ create policy "public read settings"
 drop policy if exists "admin write settings" on site_settings;
 create policy "admin write settings"
   on site_settings for update
-  using (auth.jwt() ->> 'role' = 'admin');
+  using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- === STORAGE BUCKETS ===
 -- Execute separadamente na seção Storage > New Bucket do Supabase Dashboard,

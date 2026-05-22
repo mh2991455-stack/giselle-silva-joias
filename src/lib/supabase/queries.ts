@@ -53,7 +53,7 @@ export async function getProducts(opts?: {
   if (opts?.offset) query = query.range(opts.offset, (opts.offset ?? 0) + (opts.limit ?? 50) - 1);
 
   const { data, error } = await query;
-  if (error) throw new Error(`getProducts: ${error.message}`);
+  if (error) return [];
   return (data as Product[]) ?? [];
 }
 
