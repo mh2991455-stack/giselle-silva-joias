@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProductBySlug, getRelatedProducts } from "@/lib/supabase/queries";
-import { createPublicClient } from "@/lib/supabase/public";
 import { ProductPageClient } from "./ProductPageClient";
 
-export async function generateStaticParams() {
-  const supabase = createPublicClient();
-  const { data } = await supabase.from("products").select("slug").eq("is_active", true);
-  return (data ?? []).map((p) => ({ slug: (p as { slug: string }).slug }));
-}
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
