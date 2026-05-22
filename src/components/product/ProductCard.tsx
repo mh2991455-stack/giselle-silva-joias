@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, ShoppingBag } from "lucide-react";
+import { Heart, ShoppingBag, Gem } from "lucide-react";
 import { useWishlist } from "@/context/WishlistContext";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/utils/format";
 import type { Product } from "@/types/database";
 import confetti from "canvas-confetti";
+import { useState } from "react";
 
 interface ProductCardProps {
   product: Product;
@@ -17,6 +18,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const { toggle, has } = useWishlist();
   const { add } = useCart();
   const isFav = has(product.id);
+  const [imgError, setImgError] = useState(false);
 
   function handleFavorite(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -88,15 +90,26 @@ export function ProductCard({ product }: ProductCardProps) {
         </button>
 
         {/* Image */}
-        <div className="aspect-square overflow-hidden bg-gray-50">
-          <Image
-            src={product.image_url}
-            alt={product.name}
-            width={400}
-            height={400}
-            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          />
+        <div className="aspect-square overflow-hidden bg-gray-50 relative">
+          {imgError ? (
+            <div className="w-full h-full flex flex-col items-center justify-center gap-2"
+              style={{ background: "linear-gradient(135deg, #fff8f0 0%, #ffe8f0 100%)" }}
+            >
+              <Gem className="w-10 h-10 text-[var(--color-primary)]/30" />
+              <p className="text-xs text-gray-400 text-center px-4">{product.name}</p>
+            </div>
+          ) : (
+            <Image
+              src={product.image_url}
+              alt={product.name}
+              width={400}
+              height={400}
+              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              onError={() => setImgError(true)}
+              unoptimized={product.image_url.startsWith("https://placehold")}
+            />
+          )}
         </div>
 
         {/* Info */}

@@ -8,6 +8,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { ScrollRevealGroup, ScrollRevealItem } from "@/components/ui/ScrollReveal";
 import { CATEGORIES, BANHO_OPTIONS } from "@/types/database";
 import type { Product, SortOption } from "@/types/database";
+import { matchesCategory } from "@/lib/utils/categories";
 
 const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: "destaque", label: "Destaque" },
@@ -33,7 +34,7 @@ export function CatalogoClient({ products, initialParams }: CatalogoClientProps)
 
   const filtered = useMemo(() => {
     return products.filter((p) => {
-      const matchCat = category === "Todos" || p.category.toLowerCase().includes(category.toLowerCase());
+      const matchCat = matchesCategory(p.category, category);
       const matchBanho = !banho || p.banho === banho;
       const matchSearch = !debouncedSearch || p.name.toLowerCase().includes(debouncedSearch.toLowerCase());
       return matchCat && matchBanho && matchSearch;

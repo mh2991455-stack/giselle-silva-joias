@@ -1,8 +1,7 @@
 import { createClient } from "./server";
 import type { Product, SiteSettings, Testimonial, SortOption } from "@/types/database";
 import { staticProducts } from "@/lib/static-products";
-
-/* ── helpers ─────────────────────────────────────────────────────────────── */
+import { matchesCategory } from "@/lib/utils/categories";
 
 function filterStatic(opts?: {
   category?: string;
@@ -16,7 +15,7 @@ function filterStatic(opts?: {
   let list = staticProducts;
 
   if (opts?.category && opts.category !== "Todos") {
-    list = list.filter((p) => p.category === opts.category);
+    list = list.filter((p) => matchesCategory(p.category, opts.category!));
   }
   if (opts?.banho) {
     list = list.filter((p) => p.banho === opts.banho);

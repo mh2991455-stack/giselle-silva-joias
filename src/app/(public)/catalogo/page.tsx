@@ -15,8 +15,8 @@ export default async function CatalogoPage({
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const params = await searchParams;
+  // Fetch all products — client handles category filter via matchesCategory mapping
   const products = await getProducts({
-    category: params.categoria !== "Todos" ? params.categoria : undefined,
     banho: params.banho,
     search: params.q,
     sort: (params.ordem as "novidades" | "menor-preco" | "maior-preco" | "destaque") ?? "destaque",
