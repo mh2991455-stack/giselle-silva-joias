@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@theme {
+  /* === PALETA ROSA CHAMPAGNE === */
+  --color-primary: #FF006E;
+  --color-primary-light: #FF4D94;
+  --color-primary-dark: #CC0058;
+  --color-accent: #FFB627;
+  --color-accent-light: #FFD080;
+  --color-accent-dark: #E69A00;
+  --color-dark: #1A1A2E;
+  --color-dark-80: rgba(26,26,46,0.8);
+  --color-light: #FFF8F0;
+  --color-light-dark: #F5EDE0;
+
+  /* === TIPOGRAFIA === */
+  --font-heading: var(--font-bricolage);
+  --font-body: var(--font-inter);
+  --font-price: var(--font-playfair);
+
+  /* === BORDAS === */
+  --radius-card: 16px;
+  --radius-btn: 12px;
+  --radius-full: 9999px;
+
+  /* === SOMBRAS === */
+  --shadow-card: 0 4px 24px rgba(255,0,110,0.08), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-card-hover: 0 8px 40px rgba(255,0,110,0.18), 0 2px 8px rgba(0,0,0,0.1);
+  --shadow-glass: 0 8px 32px rgba(26,26,46,0.12);
+  --shadow-glow: 0 0 40px rgba(255,0,110,0.3);
+}
+
+:root {
+  --background: #FFF8F0;
+  --foreground: #1A1A2E;
+}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-light);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 9999px;
+}
+
+/* === GRADIENT HERO ANIMATION === */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* === MARQUEE ANIMATION === */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* === PING PULSANTE === */
+@keyframes pingPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0; transform: scale(1.8); }
+}
+
+/* === FADE SLIDE UP === */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === SHIMMER SKELETON === */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* === UTILIDADES CUSTOMIZADAS === */
+.gradient-hero {
+  background: linear-gradient(135deg, #FF006E 0%, #FFB627 50%, #FF006E 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #FF006E, #FFB627);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.glass-dark {
+  background: rgba(26,26,46,0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.glass-light {
+  background: rgba(255,248,240,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,182,39,0.2);
+}
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.ping-pulse {
+  animation: pingPulse 2s ease-in-out infinite;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #f0e6d8 25%,
+    #fdf5ec 50%,
+    #f0e6d8 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+  .gradient-hero {
+    animation: none;
+    background: #FF006E;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  .ping-pulse {
+    animation: none;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* === BASE STYLES === */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-bricolage), 'Bricolage Grotesque', system-ui, sans-serif;
+}
+
+/* === FOCUS VISIBLE === */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
